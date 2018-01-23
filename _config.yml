@@ -1,0 +1,39 @@
+title: Blog
+author: Femonzor
+description: 个人博客，练习前端用。个人博客，练习前端用。个人博客。
+
+autoprefixer:
+  exclude:
+    - "*.min.css"
+  browsers:
+    - "last 2 versions"
+    - "> 1%"
+
+default_category: uncategorized
+category_map:
+  游戏: game
+  技术: technology
+  转载: reprint
+  生活: life
+  娱乐: entertainment
+tag_map:
+
+index_generator:
+  per_page: 5
+
+archive_generator:
+  per_page: 20
+  yearly: true
+  monthly: true
+
+tag_generator:
+  per_page: 10
+
+theme: realitate
+
+show_all: false
+
+deploy:
+  type: git
+  repo: git@github.com:Femonzor/femonzor.github.io.git
+  branch: master
