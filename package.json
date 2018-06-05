@@ -14,7 +14,7 @@
   },
   "private": true,
   "hexo": {
-    "version": "3.4.4"
+    "version": "3.7.1"
   },
   "dependencies": {
     "hexo": "^3.4.2",

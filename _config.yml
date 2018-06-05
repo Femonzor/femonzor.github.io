@@ -15,3 +15,9 @@ archive_generator:
   monthly: true
 
 language: zh-CN
+
+highlight:
+  enable: false
+  line_number: false
+  auto_detect: false
+  tab_replace:
