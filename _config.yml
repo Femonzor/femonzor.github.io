@@ -1,4 +1,5 @@
 author: Femonzor
+title: Femonzor's Blog
 
 theme: typing
 
@@ -21,3 +22,7 @@ highlight:
   line_number: false
   auto_detect: false
   tab_replace:
+
+toc:
+  list_number: true
+  max_depth: 2
