@@ -3,6 +3,7 @@ title: Hello World 1
 date: 2016-12-03 20:53:59
 tags: ["aaa"]
 categories: 转载
+private: true
 ---
 Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
 <!-- more -->
