@@ -6,6 +6,7 @@
   "scripts": {
     "recess": "stylus ./themes/realitate/source/css/style.styl && recess ./themes/realitate/source/css/style.css",
     "server": "hexo clean && hexo server",
+    "clean": "hexo clean",
     "debug": "hexo clean && hexo server --debug",
     "deploy": "hexo deploy"
   },
