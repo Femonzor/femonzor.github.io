@@ -26,3 +26,5 @@ highlight:
 toc:
   list_number: true
   max_depth: 2
+
+post_asset_folder: true
