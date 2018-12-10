@@ -30,8 +30,16 @@
     var AliPayQR = $('#AliPayQR');
     var WeChatQR = $('#WeChatQR');
     var currentQR;
-    var $aritcleToc = $("#article-toc");
-    var articleTocOffsetTop = $aritcleToc.offset().top;
+    var $articleToc = $("#article-toc");
+    var $window = $(window);
+    
+    if ($articleToc) {
+      $window.scroll(function () {
+        $window.scrollTop() > 110
+        ? $articleToc.addClass("fix t150p").removeClass("t260p")
+        : $articleToc.removeClass("fix t150p").addClass("t260p");
+      });
+    }
 
     function showQR(QR) {
       $('#DonateText,#donateBox,#github').addClass('blur');
@@ -76,12 +84,11 @@
         $('#main-nav').hide('fast');
       }
     });
-    $(window).on("scroll", function () {
-      if (document.body.scrollTop > articleTocOffsetTop) {
-        $aritcleToc.addClass("fix t0");
-      } else {
-        $aritcleToc.removeClass("fix t0");
-      }
+    $(window).load(function () {
+      // $("pre").addClass("prettyprint linenums").attr("style", "overflow:auto;");
+      // 不显示行号似乎效果更好
+      $("pre").addClass("prettyprint").attr("style", "overflow:auto;");
+      prettyPrint();
     });
   });
 })(jQuery, document);

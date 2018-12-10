@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  
+  <title>VS Code + Prettier + TSLint 搭建 React 开发环境 | Femonzor&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="description" content="其实关于 React 和 TypeScript 开发环境的搭建，网上已经有许多的教程。可是当根据自己想要达到的效果，在网上看文档、找教程时，发现大部分都是零零碎碎的。没有一篇相对较为完整的教程，教你各个库的作用，怎么配置能达到怎么样的效果等等。自己也摸索了一段时间，现将自己的成果记录下来，也当一次总结。 根据这篇博文，最终你可以达到如下效果：  VS Code 可以根据 TSLint 配置，显示语">
+<meta name="keywords" content="VS Code,Prettier,TSLint,TypeScript,React">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VS Code + Prettier + TSLint 搭建 React 开发环境">
+<meta property="og:url" content="http://yoursite.com/2018/12/03/vscode-prettier-tslint-react-env/index.html">
+<meta property="og:site_name" content="Femonzor&#39;s Blog">
+<meta property="og:description" content="其实关于 React 和 TypeScript 开发环境的搭建，网上已经有许多的教程。可是当根据自己想要达到的效果，在网上看文档、找教程时，发现大部分都是零零碎碎的。没有一篇相对较为完整的教程，教你各个库的作用，怎么配置能达到怎么样的效果等等。自己也摸索了一段时间，现将自己的成果记录下来，也当一次总结。 根据这篇博文，最终你可以达到如下效果：  VS Code 可以根据 TSLint 配置，显示语">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2018/12/03/vscode-prettier-tslint-react-env/vscode-prettier-default-config.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/03/vscode-prettier-tslint-react-env/tslint-error.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/03/vscode-prettier-tslint-react-env/tslint-prettier-error.png">
+<meta property="og:updated_time" content="2018-12-10T12:21:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="VS Code + Prettier + TSLint 搭建 React 开发环境">
+<meta name="twitter:description" content="其实关于 React 和 TypeScript 开发环境的搭建，网上已经有许多的教程。可是当根据自己想要达到的效果，在网上看文档、找教程时，发现大部分都是零零碎碎的。没有一篇相对较为完整的教程，教你各个库的作用，怎么配置能达到怎么样的效果等等。自己也摸索了一段时间，现将自己的成果记录下来，也当一次总结。 根据这篇博文，最终你可以达到如下效果：  VS Code 可以根据 TSLint 配置，显示语">
+<meta name="twitter:image" content="http://yoursite.com/2018/12/03/vscode-prettier-tslint-react-env/vscode-prettier-default-config.png">
+  
+  
+    <link rel="icon" href="/favicons/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/typing.css">
+  <link rel="stylesheet" href="/css/donate.css">
+  <link rel="stylesheet" href="/css/tomorrow.css">
+  
+  <style>
+    code {
+      font-family: inherit;
+    }
+  </style>
+</head>
+
+  
+    
+      <body>
+    
+  
+      <div id="container" class="container">
+        <article id="post-vscode-prettier-tslint-react-env" class="article article-type-post" itemscope itemprop="blogPost">
+  <header id="header" class="header">
+    <div class="mobile-nav">
+      <h1 class="nickname">Femonzor</h1>
+      <a id="menu">
+        &#9776; Menu
+      </a>
+    </div>
+    
+        <nav id="main-nav" class="main-nav">
+    
+    
+      <a class="main-nav-link" href="/">Home</a>
+    
+      <a class="main-nav-link" href="/archives">Archives</a>
+    
+  </nav>
+</header>
+
+  <hr class="blank"/>
+  
+<aside class="article-toc t260p" id="article-toc">
+    <h4>目录</h4>
+    <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#创建基于-TypeScript-的-React-App"><span class="post-toc-number">1.</span> <span class="post-toc-text">创建基于 TypeScript 的 React App</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用-Create-React-App-创建-React-应用"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">使用 Create React App 创建 React 应用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#安装-TSLint-和-Prettier-及其相关插件"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">安装 TSLint 和 Prettier 及其相关插件</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装-VS-Code-插件"><span class="post-toc-number">2.</span> <span class="post-toc-text">安装 VS Code 插件</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#VS-Code-整合-Prettier"><span class="post-toc-number">3.</span> <span class="post-toc-text">VS Code 整合 Prettier</span></a></li></ol>
+</aside>
+
+
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      VS Code + Prettier + TSLint 搭建 React 开发环境
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry typo" itemprop="articleBody">
+      
+        <p>其实关于 React 和 TypeScript 开发环境的搭建，网上已经有许多的教程。可是当根据自己想要达到的效果，在网上看文档、找教程时，发现大部分都是零零碎碎的。没有一篇相对较为完整的教程，教你各个库的作用，怎么配置能达到怎么样的效果等等。自己也摸索了一段时间，现将自己的成果记录下来，也当一次总结。</p>
+<p>根据这篇博文，最终你可以达到如下效果：</p>
+<ul>
+<li>VS Code 可以根据 TSLint 配置，显示语法错误</li>
+<li>VS Code 可以根据 Prettier 配置，显示代码格式错误</li>
+<li>当保存文件时，能够自动修正格式错误</li>
+</ul>
+<p>本文假设你已经了解什么是 React, TSLint, Prettier, TypeScript，并了解 VS Code 插件相关概念。<br><a id="more"></a></p>
+<h2 id="创建基于-TypeScript-的-React-App"><a href="#创建基于-TypeScript-的-React-App" class="headerlink" title="创建基于 TypeScript 的 React App"></a>创建基于 TypeScript 的 React App</h2><h3 id="使用-Create-React-App-创建-React-应用"><a href="#使用-Create-React-App-创建-React-应用" class="headerlink" title="使用 Create React App 创建 React 应用"></a>使用 Create React App 创建 React 应用</h3><p><a href="https://github.com/facebook/create-react-app" target="_blank" rel="noopener">Create React App</a> 是最流行的 React 脚手架，由 Facebook 官方维护，用它可以快速构建出基于 TypeScript 的 React 应用。我使用的版本是<code>2.1.1</code>，在终端中执行：</p>
+<pre><code class="bash">npx create-react-app react-ts-app --typescript
+</code></pre>
+<p>完成后生成的目录结构如下：</p>
+<pre><code class="tree">.
+├── README.md
+├── node_modules
+├── package-lock.json
+├── package.json
+├── public
+│   ├── favicon.ico
+│   ├── index.html
+│   └── manifest.json
+├── src
+│   ├── App.css
+│   ├── App.test.tsx
+│   ├── App.tsx
+│   ├── index.css
+│   ├── index.tsx
+│   ├── logo.svg
+│   ├── react-app-env.d.ts
+│   └── serviceWorker.ts
+└── tsconfig.json
+</code></pre>
+<p>我们主要用<code>App.tsx</code>文件来做实验.</p>
+<h3 id="安装-TSLint-和-Prettier-及其相关插件"><a href="#安装-TSLint-和-Prettier-及其相关插件" class="headerlink" title="安装 TSLint 和 Prettier 及其相关插件"></a>安装 TSLint 和 Prettier 及其相关插件</h3><p>因为我们是希望 TSLint 和 Prettier 结合一起使用，所以自然需要先安装相关库。在刚刚生成的 React 程序的根目录下执行：</p>
+<pre><code class="bash">npm install --save-dev tslint prettier tslint-config-prettier tslint-eslint-rules tslint-react
+</code></pre>
+<p>这里主要说一下 <a href="https://github.com/prettier/tslint-config-prettier" target="_blank" rel="noopener">tslint-config-prettier</a> 这个插件。由于 TSLint 和 Prettier 两者本身的校验规则是有冲突的，而这个插件的作用就是解决这个冲突使得两者可以同时使用。具体可以看这个插件的作者写的博文介绍：<a href="https://alexjover.com/blog/use-prettier-with-tslint-and-be-happy" target="_blank" rel="noopener">Use Prettier with TSLint and be happy</a>。</p>
+<p>安装完成后，在项目根目录新增<code>tslint.json</code>文件，添加如下配置：</p>
+<pre><code class="json">{
+  &quot;extends&quot;: [
+    &quot;tslint:latest&quot;,
+    &quot;tslint-react&quot;,
+    &quot;tslint-eslint-rules&quot;,
+    &quot;tslint-config-prettier&quot;
+  ]
+}
+</code></pre>
+<p>至此，工程本身配置暂时告一段落，接下去我们来配置 VS Code。</p>
+<h2 id="安装-VS-Code-插件"><a href="#安装-VS-Code-插件" class="headerlink" title="安装 VS Code 插件"></a>安装 VS Code 插件</h2><p>在 VS Code 上，安装 TSLint 和 Prettier 插件。安装完后，我们主要关心 Prettier 的配置，在配置里搜<code>prettier</code>，可以看见此时已集成了一些 Prettier 的配置：<br><img src="vscode-prettier-default-config.png" alt=""><br>然后我们看下<code>App.tsx</code>这个文件，发现 TSLint 已经开始启作用了：<br><img src="tslint-error.png" alt=""><br>图中的两个错误，分别是<code>import</code>必须按字母顺序，以及<code>render</code>函数要指明可访问的作用域。</p>
+<p>那此时 Prettier 的错误是否也能提示出来呢？如果你试着将<code>render</code>函数中的<code>html</code>代码缩进随便改乱，会发现 VS Code 并不会提示错误，即使配置了 Prettier 的校验规则也没用。原因是因为 VS Code 本身不会提示 Prettier 的错误，我们需要将 Prettier 的错误转化为 TSLint 的错误，这个 VS Code 就可以正常提示了。</p>
+<h2 id="VS-Code-整合-Prettier"><a href="#VS-Code-整合-Prettier" class="headerlink" title="VS Code 整合 Prettier"></a>VS Code 整合 Prettier</h2><p>首先，我们需要用到 <a href="https://github.com/prettier/tslint-plugin-prettier" target="_blank" rel="noopener">tslint-plugin-prettier</a> 这个插件。在项目根目录下执行：</p>
+<pre><code class="bash">npm install --save-dev tslint-plugin-prettier
+</code></pre>
+<p>同时修改<code>tslint.json</code>：</p>
+<pre><code class="json">{
+  &quot;extends&quot;: [
+    &quot;tslint:latest&quot;,
+    &quot;tslint-react&quot;,
+    &quot;tslint-eslint-rules&quot;,
+    &quot;tslint-config-prettier&quot;,
+    &quot;tslint-plugin-prettier&quot;
+  ],
+  &quot;rules&quot;: {
+    &quot;prettier&quot;: true
+  }
+}
+
+</code></pre>
+<p>完成之后，再去看<code>App.tsx</code>，可以发现 Prettier 的错误也提示了：<br><img src="tslint-prettier-error.png" alt=""><br>好了，现在还差最后一步，我们希望保存文件的时候，VS Code 能够自动纠正这些格式的错误。由于我使用的是<code>2</code>空格的缩进。为了方便查看效果，先将 Prettier 缩进设为<code>4</code>空格：</p>
+<pre><code class="json">{
+  &quot;rules&quot;: {
+    &quot;prettier&quot;: [
+      true,
+      {
+        &quot;tabWidth&quot;: 4
+      }
+    ]
+  }
+}
+</code></pre>
+<p>然后设置 VS Code 保存时自动格式化文件：<code>&quot;editor.formatOnSave&quot;: true</code>。<br>完成之后，试着保存<code>App.tsx</code>，会发现双引号自动变成了单引号，<code>img</code>标签不正确的缩进也调整回去了，但是刚刚设置的<code>4</code>空格缩进仍未被修改，另外<code>import</code>的字典顺序错误依旧存在。这时，我们需要修改 VS Code 中 Prettier 插件的一个配置：<code>prettier.tslintIntegration</code>，将其值设为<code>true</code>。其内部实现机制是用的 <a href="https://github.com/azz/prettier-tslint" target="_blank" rel="noopener">prettier-tslint</a> 这个库。总的来说就是 VS Code 内部关于 Prettier 格式调整规则有一套机制，且不能直接修改。一旦启用这个配置之后 Prettier 的调整规则就会根据<code>tslint.json</code>里配的来定。</p>
+<p>现在，我们再保存文件，就可以看到未解决的缩进大小和字典序问题都能自动调整正确。至此，开发环境算是搭建完成。</p>
+
+      
+      
+    <footer class="article-footer">
+      <ul class="article-meta">
+        <li>
+          <span class="label">发布日期:</span>
+          <a href="/2018/12/03/vscode-prettier-tslint-react-env/" class="article-date">
+  <time datetime="2018-12-03T12:53:59.000Z" itemprop="datePublished">2018-12-03</time>
+</a>
+
+        </li>
+        
+          <li>
+            <span class="label">分类:</span>
+            
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/环境搭建/">环境搭建</a>
+  </div>
+
+
+          </li>
+        
+        
+          <li>
+            <span class="label">标签:</span>
+            
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Prettier/">Prettier</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/React/">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TSLint/">TSLint</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TypeScript/">TypeScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VS-Code/">VS Code</a></li></ul>
+
+
+          </li>
+        
+        <hr/>
+      </ul>
+    </footer>
+  </div>
+  
+    
+
+  
+</article>
+
+
+
+
+
+
+
+
+      </div>
+      
+    <footer id="footer" class="post-footer footer">
+      
+      <!-- <hr/>
+      <div id="footerContent" class="footer-content">
+        <p>ipsum dolor sit amet, <strong>consectetur adipiscing elit.</strong> Fusce eget urna vitae velit <em>eleifend interdum at ac nisi. In nec ligula lacus. Cum sociis natoque</em> penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed eu cursus erat, ut dapibus quam. Post</p>
+ -->
+
+      <!-- </div> -->
+    </footer>
+
+      
+
+
+
+
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
+<script src="/js/prettify.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/typing.js"></script>
+<!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+<!-- 
+
+
+
+
+ -->
+
+    </div>
+  </body>
+</html>

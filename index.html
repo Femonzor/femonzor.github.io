@@ -83,23 +83,6 @@
 
 
 <script src="/js/typing.js"></script>
-<script>
-  $(window).load(function () {
-    $("pre").addClass("prettyprint linenums").attr("style", "overflow:auto;");
-    prettyPrint();
-  });
-  $(document).ready(function () {
-      var $articleToc = $("#article-toc");
-      var $window = $(window);
-      if ($articleToc) {
-          $window.scroll(function () {
-              $window.scrollTop() > 110
-              ? $articleToc.addClass("fix t150p").removeClass("t260p")
-              : $articleToc.removeClass("fix t150p").addClass("t260p");
-          });
-      }
-  })
-</script>
 <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
 <!-- 
 

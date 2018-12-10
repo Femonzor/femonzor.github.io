@@ -31,6 +31,7 @@ $mobile-content-width: 80%;
   color: $grey-bold;
   padding-bottom: 5px;
   display: inline-block;
+  line-height: 1.8;
   border: 0;
 }
 
@@ -42,6 +43,23 @@ body {
   position: relative;
   box-sizing: border-box;
   color: $black-light;
+}
+
+html {
+  overflow-y: scroll;
+}
+
+:root {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+:root body {
+  position: absolute;
+}
+
+body {
+  width: 100vw;
 }
 
 body, h1, h2, h3, h4, h5, h6 {
@@ -246,7 +264,6 @@ blockquote {
   line-height: 1;
   text-align: left;
   font-size: 18px;
-  padding-top: 50px;
   max-width: $content-max-width;
 
   article {
@@ -262,6 +279,7 @@ blockquote {
 
   .header {
     font-size: 18px;
+    padding-top: 50px;
   }
 
   .archive-article-header {
@@ -343,8 +361,14 @@ blockquote {
   .article-toc {
     position: absolute;
     width: 220px;
-    margin-left: -230px;
+    margin-left: -280px;
+    padding: 15px;
     font-size: 16px;
+    transition: box-shadow 150ms linear 0s;
+
+    &:hover {
+      box-shadow: 0 0 5px #ccc;
+    }
 
     .post-toc-child {
       padding-left: 10px;
@@ -595,6 +619,7 @@ $dark-white-light: #fff;
   .tag-container,
   .article {
     .header {
+      padding-top: 50px;
       .main-nav-link {
         color: $dark-grey;
       }
@@ -706,11 +731,20 @@ $highlight-purple: #8959a8;
   figure.highlight {
     margin: 0;
   }
+  code {
+    padding: .1em .3em .1em;
+    font-family: inherit;
+    background: #fbfbfb;
+    border: 1px solid #e5e8ec;
+    border-radius: .25em;
+  }
   pre {
     @extend code-block;
     code {
       background: none;
       text-shadow: none;
+      border: none;
+      border-radius: 0;
       padding: 0;
     }
   }
