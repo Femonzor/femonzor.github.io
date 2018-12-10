@@ -1,8 +1,8 @@
 ---
 title: VS Code + Prettier + TSLint 搭建 React 开发环境
-date: 2018-10-03 20:53:59
-tags: ["aaa"]
-categories: 转载
+date: 2018-12-03 20:53:59
+tags: ["VS Code", "Prettier", "TSLint", "TypeScript", "React"]
+categories: 环境搭建
 private: true
 ---
 其实关于 React 和 TypeScript 开发环境的搭建，网上已经有许多的教程。可是当根据自己想要达到的效果，在网上看文档、找教程时，发现大部分都是零零碎碎的。没有一篇相对较为完整的教程，教你各个库的作用，怎么配置能达到怎么样的效果等等。自己也摸索了一段时间，现将自己的成果记录下来，也当一次总结。
@@ -115,4 +115,6 @@ npm install --save-dev tslint-plugin-prettier
 }
 ```
 然后设置 VS Code 保存时自动格式化文件：`"editor.formatOnSave": true`。
-完成之后，试着保存`App.tsx`，会发现部分错误被自动修正了，但是刚刚设置的`4`空格缩进仍未被修改。
+完成之后，试着保存`App.tsx`，会发现双引号自动变成了单引号，`img`标签不正确的缩进也调整回去了，但是刚刚设置的`4`空格缩进仍未被修改，另外`import`的字典顺序错误依旧存在。这时，我们需要修改 VS Code 中 Prettier 插件的一个配置：`prettier.tslintIntegration`，将其值设为`true`。其内部实现机制是用的 [prettier-tslint](https://github.com/azz/prettier-tslint) 这个库。总的来说就是 VS Code 内部关于 Prettier 格式调整规则有一套机制，且不能直接修改。一旦启用这个配置之后 Prettier 的调整规则就会根据`tslint.json`里配的来定。
+
+现在，我们再保存文件，就可以看到未解决的缩进大小和字典序问题都能自动调整正确。至此，开发环境算是搭建完成。
