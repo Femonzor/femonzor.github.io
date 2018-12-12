@@ -16,7 +16,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/12/03/vscode-prettier-tslint-react-env/vscode-prettier-default-config.png">
 <meta property="og:image" content="http://yoursite.com/2018/12/03/vscode-prettier-tslint-react-env/tslint-error.png">
 <meta property="og:image" content="http://yoursite.com/2018/12/03/vscode-prettier-tslint-react-env/tslint-prettier-error.png">
-<meta property="og:updated_time" content="2018-12-10T12:21:08.000Z">
+<meta property="og:updated_time" content="2018-12-12T11:46:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="VS Code + Prettier + TSLint 搭建 React 开发环境">
 <meta name="twitter:description" content="其实关于 React 和 TypeScript 开发环境的搭建，网上已经有许多的教程。可是当根据自己想要达到的效果，在网上看文档、找教程时，发现大部分都是零零碎碎的。没有一篇相对较为完整的教程，教你各个库的作用，怎么配置能达到怎么样的效果等等。自己也摸索了一段时间，现将自己的成果记录下来，也当一次总结。 根据这篇博文，最终你可以达到如下效果：  VS Code 可以根据 TSLint 配置，显示语">
@@ -132,7 +132,7 @@
 }
 </code></pre>
 <p>至此，工程本身配置暂时告一段落，接下去我们来配置 VS Code。</p>
-<h2 id="安装-VS-Code-插件"><a href="#安装-VS-Code-插件" class="headerlink" title="安装 VS Code 插件"></a>安装 VS Code 插件</h2><p>在 VS Code 上，安装 TSLint 和 Prettier 插件。安装完后，我们主要关心 Prettier 的配置，在配置里搜<code>prettier</code>，可以看见此时已集成了一些 Prettier 的配置：<br><img src="vscode-prettier-default-config.png" alt=""><br>然后我们看下<code>App.tsx</code>这个文件，发现 TSLint 已经开始启作用了：<br><img src="tslint-error.png" alt=""><br>图中的两个错误，分别是<code>import</code>必须按字母顺序，以及<code>render</code>函数要指明可访问的作用域。</p>
+<h2 id="安装-VS-Code-插件"><a href="#安装-VS-Code-插件" class="headerlink" title="安装 VS Code 插件"></a>安装 VS Code 插件</h2><p>在 VS Code 上，安装 TSLint 和 Prettier 插件。安装完后，我们主要关心 Prettier 的配置，在配置里搜<code>prettier</code>，可以看见此时已集成了一些 Prettier 的配置：<br><img src="vscode-prettier-default-config.png" alt="vscode-prettier-default-config"><br>然后我们看下<code>App.tsx</code>这个文件，发现 TSLint 已经开始启作用了：<br><img src="tslint-error.png" alt="tslint-error"><br>图中的两个错误，分别是<code>import</code>必须按字母顺序，以及<code>render</code>函数要指明可访问的作用域。</p>
 <p>那此时 Prettier 的错误是否也能提示出来呢？如果你试着将<code>render</code>函数中的<code>html</code>代码缩进随便改乱，会发现 VS Code 并不会提示错误，即使配置了 Prettier 的校验规则也没用。原因是因为 VS Code 本身不会提示 Prettier 的错误，我们需要将 Prettier 的错误转化为 TSLint 的错误，这个 VS Code 就可以正常提示了。</p>
 <h2 id="VS-Code-整合-Prettier"><a href="#VS-Code-整合-Prettier" class="headerlink" title="VS Code 整合 Prettier"></a>VS Code 整合 Prettier</h2><p>首先，我们需要用到 <a href="https://github.com/prettier/tslint-plugin-prettier" target="_blank" rel="noopener">tslint-plugin-prettier</a> 这个插件。在项目根目录下执行：</p>
 <pre><code class="bash">npm install --save-dev tslint-plugin-prettier
@@ -152,7 +152,7 @@
 }
 
 </code></pre>
-<p>完成之后，再去看<code>App.tsx</code>，可以发现 Prettier 的错误也提示了：<br><img src="tslint-prettier-error.png" alt=""><br>好了，现在还差最后一步，我们希望保存文件的时候，VS Code 能够自动纠正这些格式的错误。由于我使用的是<code>2</code>空格的缩进。为了方便查看效果，先将 Prettier 缩进设为<code>4</code>空格：</p>
+<p>完成之后，再去看<code>App.tsx</code>，可以发现 Prettier 的错误也提示了：<br><img src="tslint-prettier-error.png" alt="tslint-prettier-error"><br>好了，现在还差最后一步，我们希望保存文件的时候，VS Code 能够自动纠正这些格式的错误。由于我使用的是<code>2</code>空格的缩进。为了方便查看效果，先将 Prettier 缩进设为<code>4</code>空格：</p>
 <pre><code class="json">{
   &quot;rules&quot;: {
     &quot;prettier&quot;: [
@@ -164,7 +164,8 @@
   }
 }
 </code></pre>
-<p>然后设置 VS Code 保存时自动格式化文件：<code>&quot;editor.formatOnSave&quot;: true</code>。<br>完成之后，试着保存<code>App.tsx</code>，会发现双引号自动变成了单引号，<code>img</code>标签不正确的缩进也调整回去了，但是刚刚设置的<code>4</code>空格缩进仍未被修改，另外<code>import</code>的字典顺序错误依旧存在。这时，我们需要修改 VS Code 中 Prettier 插件的一个配置：<code>prettier.tslintIntegration</code>，将其值设为<code>true</code>。其内部实现机制是用的 <a href="https://github.com/azz/prettier-tslint" target="_blank" rel="noopener">prettier-tslint</a> 这个库。总的来说就是 VS Code 内部关于 Prettier 格式调整规则有一套机制，且不能直接修改。一旦启用这个配置之后 Prettier 的调整规则就会根据<code>tslint.json</code>里配的来定。</p>
+<p>然后设置 VS Code 保存时自动格式化文件：<del><code>&quot;editor.formatOnSave&quot;: true</code></del><code>&quot;tslint.autoFixOnSave&quot;: true</code>。<br><strong><em>（2018-12-11更新：VS Code 自带的<code>editor.formatOnSave</code>并不能达到想要的效果，比如<code>ordered-imports</code>规则，format 后语法都错了。）</em></strong></p>
+<p>完成之后，试着保存<code>App.tsx</code>，会发现双引号自动变成了单引号，<code>img</code>标签不正确的缩进也调整回去了，但是刚刚设置的<code>4</code>空格缩进仍未被修改，另外<code>import</code>的字典顺序错误依旧存在。这时，我们需要修改 VS Code 中 Prettier 插件的一个配置：<code>prettier.tslintIntegration</code>，将其值设为<code>true</code>。其内部实现机制是用的 <a href="https://github.com/azz/prettier-tslint" target="_blank" rel="noopener">prettier-tslint</a> 这个库。总的来说就是 VS Code 内部关于 Prettier 格式调整规则有一套机制，且不能直接修改。一旦启用这个配置之后 Prettier 的调整规则就会根据<code>tslint.json</code>里配的来定。</p>
 <p>现在，我们再保存文件，就可以看到未解决的缩进大小和字典序问题都能自动调整正确。至此，开发环境算是搭建完成。</p>
 
       
