@@ -70,9 +70,9 @@ npm install --save-dev tslint prettier tslint-config-prettier tslint-eslint-rule
 ## 安装 VS Code 插件
 
 在 VS Code 上，安装 TSLint 和 Prettier 插件。安装完后，我们主要关心 Prettier 的配置，在配置里搜`prettier`，可以看见此时已集成了一些 Prettier 的配置：
-![](vscode-prettier-default-config.png)
+![vscode-prettier-default-config](vscode-prettier-default-config.png)
 然后我们看下`App.tsx`这个文件，发现 TSLint 已经开始启作用了：
-![](tslint-error.png)
+![tslint-error](tslint-error.png)
 图中的两个错误，分别是`import`必须按字母顺序，以及`render`函数要指明可访问的作用域。
 
 那此时 Prettier 的错误是否也能提示出来呢？如果你试着将`render`函数中的`html`代码缩进随便改乱，会发现 VS Code 并不会提示错误，即使配置了 Prettier 的校验规则也没用。原因是因为 VS Code 本身不会提示 Prettier 的错误，我们需要将 Prettier 的错误转化为 TSLint 的错误，这个 VS Code 就可以正常提示了。
@@ -100,7 +100,7 @@ npm install --save-dev tslint-plugin-prettier
 
 ```
 完成之后，再去看`App.tsx`，可以发现 Prettier 的错误也提示了：
-![](tslint-prettier-error.png)
+![tslint-prettier-error](tslint-prettier-error.png)
 好了，现在还差最后一步，我们希望保存文件的时候，VS Code 能够自动纠正这些格式的错误。由于我使用的是`2`空格的缩进。为了方便查看效果，先将 Prettier 缩进设为`4`空格：
 ``` json
 {
@@ -114,7 +114,9 @@ npm install --save-dev tslint-plugin-prettier
   }
 }
 ```
-然后设置 VS Code 保存时自动格式化文件：`"editor.formatOnSave": true`。
+然后设置 VS Code 保存时自动格式化文件：~~`"editor.formatOnSave": true`~~`"tslint.autoFixOnSave": true`。
+**_（2018-12-11更新：VS Code 自带的`editor.formatOnSave`并不能达到想要的效果，比如`ordered-imports`规则，format 后语法都错了。）_**
+
 完成之后，试着保存`App.tsx`，会发现双引号自动变成了单引号，`img`标签不正确的缩进也调整回去了，但是刚刚设置的`4`空格缩进仍未被修改，另外`import`的字典顺序错误依旧存在。这时，我们需要修改 VS Code 中 Prettier 插件的一个配置：`prettier.tslintIntegration`，将其值设为`true`。其内部实现机制是用的 [prettier-tslint](https://github.com/azz/prettier-tslint) 这个库。总的来说就是 VS Code 内部关于 Prettier 格式调整规则有一套机制，且不能直接修改。一旦启用这个配置之后 Prettier 的调整规则就会根据`tslint.json`里配的来定。
 
 现在，我们再保存文件，就可以看到未解决的缩进大小和字典序问题都能自动调整正确。至此，开发环境算是搭建完成。

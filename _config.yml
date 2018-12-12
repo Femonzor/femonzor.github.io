@@ -28,3 +28,7 @@ toc:
   max_depth: 2
 
 post_asset_folder: true
+
+# asset_pipeline:
+#   revisioning:
+#     enable: true
